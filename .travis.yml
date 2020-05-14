@@ -1,0 +1,16 @@
+language: ruby
+rvm:
+- 2.6.6
+services:
+- docker
+before_install:
+- docker pull bdunne/mock
+- mkdir $TRAVIS_BUILD_DIR/result
+jobs:
+  include:
+  - stage: srpm
+    script: curl https://raw.githubusercontent.com/bdunne/rpm-build-scripts/master/bin/srpm | bash
+  - stage: noarch
+    script: curl https://raw.githubusercontent.com/bdunne/rpm-build-scripts/master/bin/arch | bash
+  - stage: finalize
+    script: curl https://raw.githubusercontent.com/bdunne/rpm-build-scripts/master/bin/finalize_build | bash
